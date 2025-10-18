@@ -77,8 +77,6 @@ export default function App() {
           if (!line.startsWith("data:")) continue;
 
           const data = line.replace(/^data:\s*/, "");
-          if (!data || data === "[DONE]") continue;
-
           // parse safely
           let json;
           try {
@@ -86,7 +84,7 @@ export default function App() {
           } catch (err) {
             // If parsing fails, skip this line (it might be partial; but because we extracted only full lines,
             // a parse error likely means server sent malformed JSON — skip).
-            console.warn("Failed to JSON.parse SSE data line:", data);
+            console.warn("Failed to JSON.parse SSE data line:", data, err);
             continue;
           }
 
